@@ -1,0 +1,594 @@
+﻿\documentclass{beamer}
+\usepackage{beamerthemesplit}
+\usepackage{latexsym}
+\usepackage{eurosym}
+\usepackage[activeacute,english]{babel}
+\usepackage{ae,aecompl}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata}
+\usetikzlibrary{calc,3d}
+\usepackage{rotating}
+\usepackage{color}
+\usepackage{moreverb}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{array}
+\usepackage[refpages]{gloss}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multirow}
+%\usepackage{bm, bbm}
+
+\def \ind  {\stackrel{{\rm \tiny IND}}{\sim}}  % definir ind
+\def \iid  {\stackrel{{\rm \tiny IID}}{\sim}}  % definir iid
+
+\usetheme{Boadilla}
+\title[Inferencia Basada en el Modelo]{Inferencia Basada en el Modelo para Dise\~nos de Muestreo Convencionales}
+\author[Trujillo, Leonardo]{Leonardo Trujillo}
+\institute[]{Departamento de Estadistica\\Universidad Nacional de Colombia\\Seminario del Departamento}
+\date{17-05-2018}
+
+\begin{document}
+
+%1
+\frame{\titlepage}
+
+%2
+\begin{frame}
+\frametitle{Outline}
+\tableofcontents
+\end{frame}
+%\frame{\tableofcontents}
+
+%3
+\section{Introduccion}
+ \tableofcontents[currentsection]
+
+%4
+\begin{frame}[allowframebreaks*]
+\frametitle{Inferencia Basada en el Dise\~no}
+En inferencia basada en el dise\~no, los valores $y_1, ..., y_N$ son considerados como constantes fijas. La idea es inferir acerca de parametros descriptivos desconocidos en la poblacion finita $U$. Las observaciones disponibles se limitan a aquellas observadas en una muestra $s$ y la poblacion finita $U$ es el objetivo de la inferencia. La estructura estocastica necesaria es inducida por el dise\~no muestral donde la muestra $s$ es el elemento aleatorio. Se obtiene un estimador de la varianza del dise\~no. La inferencia se obtiene con respecto a la distribucion de estadisticas sobre muestras repetidas S generadas por el diseño muestral.
+\end{frame}
+
+%5
+\begin{frame}[allowframebreaks*]
+\frametitle{Inferencia Basada en el Modelo}
+En inferencia basada en el modelo, se recurre a un modelo de superpoblacion pero la inferencia sigue siendo para la poblacion finita y sus parametros. La definicion en inferencia estadistica para una muestra aleatoria se refiere a un conjunto de variables aleatorias $Y_1, ..., Y_N$ i.i.d (con una distribucion normal con media $\mu$ y varianza $\sigma^2$. Podemos extender esta idea ahora a variables aleatorias $Y_1, ..., Y_N$ generadas a partir de cierto modelo $\xi$. Los valores reales para la poblacion finita $y_1, ..., y_N$ son una realizacion de las variables aleatorias. La distribucion de probabilidad conjunta de $Y_1, ..., Y_N$ proporciona este vinculo entre las unidades que estan en la muestra y las que no estan. Muestreamos ${y_k, k \in s}$ para predecir los valores no observados ${y_k, k \notin s}$.
+\end{frame}
+
+%6
+\begin{frame}[allowframebreaks*]
+\frametitle{Ejemplo}
+Para una region y un periodo de tiempo dado se presentan datos de su poblacion de hospitales (Morales, 2015). Se quiere estimar $T=\sum\limits_{k=1}^{N}y_k$. Para ello se extrae una muestra $s$ de tama\~no $n$=31, excluyendo el caso 16. Observese que $\sum\limits_{k \in s}y_k$ y que $T=\sum\limits_{k \in s}y_k + y_{16}$. Por tanto estimar $T$ equivale a predecir $y_{16}$. Supongamos que ademas se verifica un modelo $M$ de regresion lineal simple, es decir $E_M[Y_k]=\beta x_k$ $k=1, ...,N$ con $Cov_M(Y_k,Y_l)=\sigma^2 x_k$ si $k=l$ y 0 en otro caso. $\beta$ es un parametro desconocido que se debe estimar.
+\end{frame}
+
+%6
+\begin{frame}[allowframebreaks*]
+\frametitle{Ejemplo}
+\begin{tabular}{|c|c|c|}
+                                                                                  \hline
+                                                                                  % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+                                                                                  Hospital & Camas(x) & Ingresos(y) \\
+                                                                                  1 & 49 & 173 \\
+                                                                                  2 & 50 & 260 \\
+                                                                                  3 & 64 & 225 \\
+                                                                                  4 & 70 & 209 \\
+                                                                                  5 & 99 & 346 \\
+                                                                                  6 & 100 & 383 \\
+                                                                                  7 & 100 & 318 \\                                                                  8 & 100 & 373 \\
+                                                                                  9 & 128 & 577 \\
+                                                                                  10 & 184 & 481 \\
+                                                                                  11 & 224 & 590 \\
+                                                                                  12 & 227 & 732 \\
+                                                                                  13 & 231 & 931 \\
+                                                                                  14 & 233 & 684 \\
+                                                                                  15 & 244 & 858 \\
+                                                                                  \textbf{16} & \textbf{260} & \textbf{1076} \\
+                                                                                  \hline
+                                                                                \end{tabular}
+\begin{tabular}{|c|c|c|}
+                                                                                  \hline
+                                                                                  % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+                                                                                  Hospital & Camas(x) & Ingresos(y) \\
+                                                                                  17 & 275 & 1201 \\
+                                                                                  18 & 279 & 754 \\
+                                                                                  19 & 303 & 715 \\
+                                                                                  20 & 309 & 985 \\
+                                                                                  21 & 347 & 1166 \\
+                                                                                  22 & 350 & 1173 \\
+                                                                                  23 & 373 & 787 \\                                                                 24 & 411 & 808 \\
+                                                                                  25 & 417 & 1369 \\
+                                                                                  26 & 451 & 1584 \\
+                                                                                  27 & 523 & 1232 \\
+                                                                                  28 & 549 & 1547 \\
+                                                                                  29 & 551 & 1645 \\
+                                                                                  30 & 558 & 1152 \\
+                                                                                  31 & 562 & 2116 \\
+                                                                                  32 & 591 & 999 \\
+                                                                                  \hline
+                                                                                \end{tabular}
+\end{frame}
+
+%6
+\begin{frame}[allowframebreaks*]
+\frametitle{Estimador BLUE}
+El estimador lineal insesgado de minima varianza (blue - best linear unbiased estimator) se obtiene minimizando la suma ponderada de cuadrados de los errores
+\begin{equation*}
+  SPCE = \sum\limits_{k \in s} \frac{1}{\sigma^2 x_k} (y_k - \beta x_k)^2
+\end{equation*}
+es decir,
+\begin{equation*}
+  0=\frac{\partial SCPE}{\partial \beta}= -\sum\limits_{k \in s}\frac{2(y_k - \beta x_k) x_k}{\sigma^2 x_k}
+\end{equation*}
+Por lo tanto,
+\begin{equation*}
+\hat{\beta}=\frac{\sum\limits_{k \in s} y_k}{\sum\limits_{k \in s} x_k}=\frac{28641}{9938}=2,882
+\end{equation*}
+\end{frame}
+
+%6
+\begin{frame}[allowframebreaks*]
+\frametitle{Estimador BLUE}
+En un analisis de regresion convencional se construiria un intervalo de confianza para $\beta$ o se contrastaria $H_0: \beta$ = 0, pero aqui $\hat{\beta}$ es solo un paso intermedio para llegar al objetivo de estimar $T$. En el hospital 16, se tiene $x_{16}$=260, $\hat{y}_{16}=\hat{\beta} x_{16}$=(2,882)(260)=749 y por lo tanto
+\begin{equation*}
+  \hat{T}=\sum\limits_{k \in s}+\hat{y}_{16}=28641+749=29390
+\end{equation*}
+Observese que en este caso el error relativo es
+\begin{equation*}
+  \frac{|\hat{T}-T|}{T} 100\% =\frac{|29390-29717}{29717} 100\% \cong 1\%
+\end{equation*}
+que puede considerarse como moderado.
+\end{frame}
+
+%6
+\begin{frame}[allowframebreaks*]
+\frametitle{Estimador BLUE}
+El ejemplo anterior se puede generalizar al caso
+\begin{equation*}
+  T=\sum\limits_{k \in s} y_k + \sum\limits_{k \in U-s} y_k
+\end{equation*}
+En este contexto el estimador de $T$ sera
+\begin{align*}
+  \hat{T}&=\sum\limits_{k \in s} y_k + \sum\limits_{k \in U-s} \hat{\beta} x_{k} = \sum\limits_{k \in s} y_k + \frac{\sum\limits_{k \in s} y_k}{\sum\limits_{k \in s} x_k} \sum\limits_{k \in U-s} x_k \\
+  &= \left(\frac{\sum\limits_{k \in s} y_k}{\sum\limits_{k \in s} x_k}\right) \sum\limits_{k \in U} x_k = N\bar{y}_s \frac{\bar{x}_U}{\bar{x}_s}
+\end{align*}
+(Estimador de Razon)
+\end{frame}
+
+%6
+\begin{frame}[allowframebreaks*]
+\frametitle{Modelos y Dise\~nos de Muestreo Convencionales}
+Consideraremos ahora varios dise\~nos de muestreo convencionales en la literatura de inferencia basada en el dise\~no y propondremos un modelo relacionado bajo la inferencia basada en el modelo con el fin de estimar un total poblacional de acuerdo a lo presentado en Lohr (2000, Sampling - Design and Analysis, Duxbury). Consideraremos los siguientes dise\~nos muestrales: muestreo aleatorio simple, muestreo estratificado, muestreo de conglomerados, muestreo con probabilidades proporcionales al tama\~no, estimador de razon, estimador de regresion). Igualmente consideramos al final el problema de la determinacion del tama\~no de muestra.
+\end{frame}
+
+%7
+\section{Muestreo Aleatorio Simple}
+ \tableofcontents[currentsection]
+
+%8
+\begin{frame}[allowframebreaks*]
+\frametitle{Modelo para Muestreo Aleatorio Simple}
+{\footnotesize
+Un modelo para este dise\~no se plantea en Lohr (2000) como
+$$\xi: y_k = \mu + U_k \hspace{1.5cm} k=1,\ldots,N$$
+donde se tiene que
+\begin{align*}
+E_{\xi}(U_k)&=0 \\
+E_{\xi}(U_k^2)&=\sigma^2\\
+E_{\xi}(U_k U_l)&=0, \hspace{1cm} k,l = 1, 2, \ldots, N \hspace{.5cm} \text{con} \hspace{.5cm} k \neq l
+\end{align*}
+
+Se observa que se puede expresar el total de la siguiente forma:
+
+\begin{equation*}
+t=\sum\limits_{i=1}^Ny_k=\sum\limits_{S}y_k+\sum\limits_{S^c}y_k
+\end{equation*}}
+\end{frame}
+
+%9
+\begin{frame}[allowframebreaks*]
+\frametitle{Modelo para Muestreo Aleatorio Simple}
+La cual es una realizacion de la v. a.
+\begin{align*}
+T&=\sum\limits_{i=1}^NY_k=\sum\limits_{S}Y_k+\sum\limits_{S^c}Y_k\\
+&\Rightarrow \hat T=\sum\limits_{S}Y_k+\sum\limits_{S^c}\hat Y_k
+\end{align*}
+
+Dado el modelo que se tomo, se puede observar:
+
+\begin{align*}
+\xi:Y_k&=\mu+U_k\\
+E_{\xi}(Y_k)&=E_{\xi}(\mu+U_k)\\
+&=\mu+E_{\xi}(U_k)\\
+&=\mu+0=\mu\\
+E_{\xi}(Y_k)&=\mu
+\end{align*}
+
+Como $$E_{\xi}(Y_k)=\mu\Rightarrow \hat {Y}_k=\hat\mu$$
+\end{frame}
+
+%10
+\begin{frame}[allowframebreaks*]
+\frametitle{Minimos Cuadrados Ordinarios}
+{\footnotesize
+Mediante la metodologia de minimos cuadrados ordinarios se tiene:
+
+\begin{align*}
+\sum\limits_{k \in S}(Y_k-E(Y_k))^2&=\sum_{k \in S}(Y_k-\hat \mu)^2\rightarrow SCE\\
+\frac{\partial SCE}{\partial\mu}&=-2\sum\limits_{k \in S}(Y_k-\hat\mu)=0\\
+&\Rightarrow \sum\limits_{k \in S}Y_k-\sum\limits_{k \in S}\hat\mu=0\\
+&\Rightarrow \sum\limits_{k \in S}Y_k=n\hat\mu\\
+&\Rightarrow \sum\limits_{k \in S}\frac{Y_k}{n}=\hat\mu\\
+&\Rightarrow \hat\mu=\bar Y
+\end{align*}
+
+con $\bar Y= \sum\limits_{i=1}^n\frac{Y_i}{n}= \sum\limits_{k \in S}\frac{Y_k}{n}$
+}
+\end{frame}
+
+%11
+\begin{frame}[allowframebreaks*]
+\frametitle{Estimacion del Total Poblacional}
+{\footnotesize
+Dado esto se tiene:
+\begin{align*}
+\hat T&=\sum_S Y_k+\sum_{S^c}\hat Y_k\\
+&=\sum_S Y_k+\sum_{S^c}\hat \mu\\
+&=\sum_S Y_k+\sum_{S^c}\left(\sum_S\frac{Y_k}{n}\right)\\
+&=\sum_SY_k+\frac{(N-n)}{n}\sum_S Y_k\\
+&=\sum_SY_k+\frac{N}{n}\sum_SY_k-\frac{n}{n}\sum_SY_k\\
+&=\frac{N\sum_S Y_k}{n}=N\bar Y_S=N\hat\mu\\
+&\Rightarrow \hat{\bar {Y}}_U=\frac{\hat T}{N}=\bar Y_S=\hat\mu
+\end{align*}
+$Y_S$ es insesgado para $\mu$? BLUP. $Y_S$ es insesgado para $\bar Y_U?$. $\hat T$ es insesgado para $N\mu$?. $\hat T$ es insesgado para $T$?
+}
+\end{frame}
+
+%12
+\begin{frame}[allowframebreaks*]
+\frametitle{Insesgamiento}
+Ahora se muestra que $\hat T$ es insesgado para $T$.
+
+\begin{align*}
+E[\hat T]&=E[\sum_S Y_k+\sum_{S^c}\hat Y_k]=E[\sum_S Y_k]+E[\sum_{S^c}\hat Y_k] \\
+&=E[\sum_S Y_k]+E[\sum_{S^c}\hat \mu]=E[\sum_S Y_k]+E[\sum_{S^c}\bar Y_S]
+\end{align*}
+
+Dado que una v.a no puede ser el valor esperado de otra v.a, no se puede observar que sea insesgado por este metodo. Se va a observar que el promedio de $\hat T-T$ bajo varias realizaciones es 0.
+\end{frame}
+
+%13
+\begin{frame}[allowframebreaks*]
+\frametitle{Insesgamiento}
+{\footnotesize
+\begin{align*}
+E_\xi[\hat T-T]&=E_\xi[\hat T]-E_\xi[T]\\
+&=E_\xi\left[\frac{N}{n}\sum_SY_k\right]-E_\xi\left[\sum_UY_k\right]\\
+&=\frac{N}{n}E_\xi\left[\sum_SY_k\right]-E_\xi\left[\sum_UY_k\right]\\
+&=\frac{N}{n}\sum_SE_\xi\left[Y_k\right]-E_\xi\sum_U\left[Y_k\right]\\
+&=\frac{N}{n}\sum_S\mu-\sum_U\mu\\
+&=\frac{N}{n}n\mu-N\mu=N\mu-N\mu=0
+\end{align*}
+El estimador $\hat T$ es insesgado para $T$.
+
+\begin{align*}
+E_\xi[\bar Y_S-\bar Y_U]&=E_\xi[\bar Y_S]-E_\xi[\bar Y_U]\\
+&=\sum_S\frac{E_\xi[Y_k]}{n}-\sum_U\frac{E_\xi[Y_k]}{N}=\frac{n}{n}\mu-\frac{N}{N}\mu=0
+\end{align*}
+}
+\end{frame}
+
+%14
+\begin{frame}[allowframebreaks*]
+\frametitle{Varianza}
+\begin{align*}
+V_{\xi}(\hat\mu)&=V_\xi(\bar Y_S)=V_\xi\left(\sum_S\frac{Y_k}{n}\right)\\
+&\stackrel{ind}{=}\sum_S\frac{V_\xi(Y_k)}{n^2}=\sum_S\frac{\sigma^2}{n^2}=\frac{\sigma^2}{n}
+\end{align*}
+
+Entonces se tiene:
+
+\begin{align*}
+V_\xi(\hat T)&=V_\xi\left(\frac{N\sum_S Y_k}{n}\right)=\frac{N^2}{n^2}V_\xi(\sum_SY_k)\stackrel{\text{ind}}{=}\frac{N^2}{n^2}n\sigma^2=\frac{N^2}{n}\sigma^2\\
+V_\xi(\hat {\bar {Y}}_U)&=V_\xi\left(\sum_S\frac{Y_k}{n}\right)=\frac{1}{n^2}V_\xi(\sum_S Y_k)\stackrel{\text{ind}}{=}\frac{1}{n^2}n\sigma^2=\frac{1}{n}\sigma^2
+\end{align*}
+\end{frame}
+
+%15
+\begin{frame}[allowframebreaks*]
+\frametitle{Error Cuadratico Medio}
+{\footnotesize
+\begin{align*}
+ECM[(\hat T-T)^2]&=E_\xi[(\hat T-T)]^2=E_\xi\left[\left(\frac{N}{n}\sum_SY_k-\sum_UY_k\right)^2\right]\\
+&=E_\xi\left[\left(\frac{N}{n}\sum_SY_k-\sum_SY_k-\sum_{S^c}Y_k\right)^2\right]\\
+&=E_\xi\left[\left(\left(\frac{N}{n}-1\right)\sum_SY_k-\sum_{S^c}Y_k\right)^2\right]\\
+&=E_\xi\left[\left(\left(\frac{N}{n}-1\right)\sum_SY_k-\sum_{S^c}Y_k-\left(\frac{N}{n}-1\right)n\mu+\left(\frac{N}{n}-1\right)n\mu\right)^2\right]\\
+&=E_\xi\left[\left(\left(\frac{N}{n}-1\right)\left(\sum_SY_k-n\mu\right)-\left(\sum_{S^c}Y_k-\left(\frac{N}{n}-1\right)n\mu\right)\right)^2\right]\\
+&=E_\xi\left[\left(\frac{N}{n}-1\right)^2\left(\sum_SY_k-n\mu\right)^2+\left(\sum_{S^c}Y_k-\left(\frac{N}{n}-1\right)n\mu\right)^2\right. \\ &\left.-2\left(\frac{N}{n}-1\right)\left(\sum_SY_k-n\mu\right)\left(\sum_{S^c}Y_k-\left(\frac{N}{n}-1\right)n\mu\right)\right]
+\end{align*}
+}
+\end{frame}
+
+%16
+\begin{frame}[allowframebreaks*]
+\frametitle{Error Cuadratico Medio}
+{\footnotesize
+\begin{align*}
+&=\left(\frac{N}{n}-1\right)^2
+E_\xi\left[\left(\sum_SY_k-n\mu\right)^2\right]+E_\xi\left[\left(\sum_{S^c}Y_k-\left(\frac{N}{n}-1\right)n\mu\right)^2\right] \\ &-2\left(\frac{N}{n}-1\right)E_\xi\left[\left(\sum_SY_k-n\mu\right)\left(\sum_{S^c}Y_k-\left(\frac{N}{n}-1\right)n\mu\right)\right]\\
+&=\left(\frac{N}{n}-1\right)^2E_\xi\left[n^2\left(\sum_S\frac{Y_k}{n}-\mu\right)^2\right]+E_\xi\left[\left(\sum_{S^c}Y_k-\left(N-n\right)\mu\right)^2\right] \\
+&-2\left(\frac{N}{n}-1\right)cov\left(\sum_SY_k,\sum_{S^c}Y_k\right)\\
+&\stackrel{\text{ind}}{=}\left(\frac{N}{n}-1\right)^2 n^2E_\xi\left[\left(\sum_S\frac{Y_k}{n}-\mu\right)^2\right]+\left(N-n\right)^2E_\xi\left[\left(\sum_{S^c}\frac{Y_k}{(N-n)}-\mu\right)^2\right]
+\end{align*}
+}
+\end{frame}
+
+%17
+\begin{frame}[allowframebreaks*]
+\frametitle{Error Cuadratico Medio}
+{\footnotesize
+\begin{align*}
+ECM[(\hat T-T)^2]&=\left(\frac{N}{n}-1\right)^2n^2\frac{\sigma^2}{n}+\left(N-n\right)^2\frac{\sigma^2}{(N-n)}\\
+&=\left(\frac{N}{n}-1\right)^2n\sigma^2+\left(N-n\right)\sigma^2\\
+&=\left(\frac{N-n}{n}\right)^2n\sigma^2+\left(N-n\right)\sigma^2\\
+&=\sigma^2\left[\frac{(N-n)^2}{n^2}n+\left(N-n\right)\right]\\
+&=\sigma^2\left[\frac{N^2-2Nn+n^2}{n}+\left(N-n\right)\right]\\
+&=\sigma^2\left[\frac{N^2-2Nn+n^2+Nn-n^2}{n}\right]\\
+&=\sigma^2\left[\frac{N^2-Nn}{n}\right]=\frac{N^2}{n}\sigma^2\left[1-\frac{n}{N}\right]\\
+&=N^2\frac{(1-f)}{n}\sigma^2
+\end{align*}}
+\end{frame}
+
+%18
+\section{Muestreo Estratificado}
+ \tableofcontents[currentsection]
+
+%19
+\begin{frame}[allowframebreaks*]
+\frametitle{Modelo para Muestreo MAS Estratificado}
+{\footnotesize
+Un modelo para el dise\~no MAS estratificado seria
+$$\xi: Y_{hk}=\mu_h+U_{hk}\hspace{0.5cm}k=1,\ldots,N\hspace{0.5cm}h=1,\ldots,H$$
+donde se tiene que:
+\begin{align*}
+E_{\xi}(U_{hk})&=0\\
+E_{\xi}(U_{hk}^2)&=\sigma_h^2\\
+E_{\xi}(U_{hk}U_{hl})&=0\\
+E_{\xi}(Y_{hk})&=\mu_h\\
+Var_{\xi}(Y_{hk})&=\sigma_h^2\\
+Cov_{\xi}(Y_{hk}Y_{hl})&=0 \hspace{.5cm} k,l&=1,\ldots,N \hspace{.5cm} k&\neq l
+\end{align*}
+El total global se puede observar como:
+\begin{equation*}
+T=\sum\limits_{h=1}^HT_h
+\end{equation*}
+donde los $T_h$ son los totales de cada uno de los estratos.}
+\end{frame}
+
+%14
+\begin{frame}[allowframebreaks*]
+\frametitle{Notacion}
+{\footnotesize
+\begin{align*}
+T_h&=\sum\limits_{k=1}^{N_h}Y_{hk}\\
+T&=\sum\limits_{h=1}^HT_h=\sum\limits_{h=1}^H\sum\limits_{k=1}^{N_h}Y_{hk}=\sum\limits_{h=1}^H\left(\sum_SY_{hk}+\sum_{S^c}Y_{hk}\right)\\
+\Rightarrow \hat T&=\sum\limits_{h=1}^H\left(\sum_SY_{hk}+\sum_{S^c}\hat Y_{hk}\right)\\
+\end{align*}
+pero se tiene que:
+\begin{align*}
+E(Y_{hk})&=E(\mu_h+U_{hk})=E(\mu_h)+E(U_{hk})=\mu_h+0=\mu_h\\
+\Rightarrow \hat Y_{hk}&=\hat\mu_h
+\end{align*}}
+\end{frame}
+
+%15
+\begin{frame}[allowframebreaks*]
+\frametitle{Minimos Cuadrados}
+{\footnotesize
+Por minimos cuadrados ordinarios se tiene:
+\begin{align*}
+\sum\limits_{k=1}^{n_h}\left(Y_{hk}-E (Y_{hk})\right)^2&=\sum\limits_{k=1}^{n_h}\left(Y_{hk}-\mu_{h}\right)^2\rightarrow \text{Suma de Cuadrados del Error } (SCE)\\
+\frac{\partial SCE}{\partial\hat\mu}&=-2\sum\limits_{k=1}^{n_h}\left(Y_{hk}-\hat \mu_{h}\right)=0\\
+&\Rightarrow\sum\limits_{k=1}^{n_h} Y_{hk}-\sum\limits_{k=1}^{n_h}\hat\mu_h=0\\
+&\Rightarrow\sum\limits_{k=1}^{n_h}Y_{hk}=\sum\limits_{k=1}^{n_h}\hat\mu_h\\
+&\Rightarrow\frac{1}{n_h}\sum\limits_{k=1}^{n_h}Y_{hk}=\hat\mu_h
+\end{align*}}
+\end{frame}
+
+%16
+\begin{frame}[allowframbreaks*]
+\frametitle{Estimacion}
+{\footnotesize
+Entonces un estimador para el total seria:
+\begin{align*}
+\hat T_h&=\sum_SY_{hk}+\sum_{S^c}\hat Y_{hk}\\
+&=\sum_S Y_{hk}+\sum_{S^c}\hat\mu_h\\
+&=\sum_S Y_{hk}+\sum_{S^c}\left(\frac{1}{n_h}\sum\limits_{k=1}^{n_h}Y_{hk}\right)\\
+&=\sum_S Y_{hk}+\frac{\left(N_h-n_h\right)}{n_h}\sum\limits_{k=1}^{n_h}Y_{hk}\\
+&=\frac{N_h}{n_h}\sum\limits_{k=1}^{n_h}Y_{hk}+\sum_SY_{hk}-\sum\limits_{k=1}^{n_h}Y_{hk}\\
+&=\frac{N_h}{n_h}\sum\limits_{k=1}^{n_h}Y_{hk}\\
+&=\frac{N_h}{n_h}\sum_S Y_{hk}
+\end{align*}}
+\end{frame}
+
+%17
+\begin{frame}[allowframebreaks*]
+\frametitle{Insesgamiento}
+\begin{align*}
+E_\xi[\hat T_h-T_h]&=E_\xi[\hat T_h]-E_\xi[T_h]\\
+&=E_\xi\left[\frac{N_h}{n_h}\sum_SY_{hk}\right]-E_\xi\left[\sum\limits_{k=1}^{N_h}Y_{hk}\right]\\
+&=\frac{N_h}{n_h}\sum_SE_\xi\left[Y_{hk}\right]-\sum\limits_{k=1}^{N_h}E_\xi\left[Y_{hk}\right]\\
+&=\frac{N_h}{n_h}\sum_S\mu_h-\sum_{k=1}^{N_h}\mu_h\\
+&=\frac{N_h}{n_h}n_h\mu_h-N_h\mu_h\\
+&=N_h\mu_h-N_h\mu_h=0
+\end{align*}
+\end{frame}
+
+%18
+\begin{frame}[allowframebreaks*]
+\frametitle{Error Cuadratico Medio}
+{\footnotesize
+\begin{align*}
+\centering
+ECM_\xi&=E_\xi\left[(\hat T_h-T_h)^2\right]\\
+&=E_\xi\left[\left(\frac{N_h}{n_h}\sum_SY_{hk}-\sum\limits_{k=1}^{N_h}Y_{hk}\right)^2\right]\\
+&=E_\xi\left[\left(\frac{N_h}{n_h}\sum_SY_{hk}-\sum_{S}Y_{hk}-\sum_{S^c}Y_{hk}\right)^2\right]\\
+&=E_\xi\left[\left(\left(\frac{N_h}{n_h}-1\right)\sum_SY_{hk}-\sum_{S^c}Y_{hk}\right)^2\right]\\
+&=E_\xi\left[\left(\left(\frac{N_h}{n_h}-1\right)\sum_SY_{hk}-\sum_{S^c}Y_{hk}-\left(\frac{N_h}{n_h}-1\right)n_h\mu_h+\left(\frac{N_h}{n_h}-1\right)n_h\mu_h\right)^2\right]\\
+&=E_\xi\left[\left(\left(\frac{N_h}{n_h}-1\right)\left(\sum_SY_{hk}-n_h\mu_h\right)-\left(\sum_{S^c}Y_{hk}-\left(\frac{N_h}{n_h}-1\right)n_h\mu_h\right)\right)^2\right]\\
+\end{align*}}
+\end{frame}
+
+%19
+\begin{frame}[allowframebreaks*]
+\frametitle{Error Cuadratico Medio}
+{\footnotesize
+\begin{align*}
+&=\sigma^2_h\left(\left(\frac{N_h}{n_h}-1\right)^2n_h+(N_h-n_h)\right)\\
+&=\sigma^2_h\left(\left(\frac{N_h-n_h}{n_h}\right)^2n_h+(N_h-n_h)\right)\\
+&=\sigma^2_h\left(\left(\frac{N^2_h+n_h^2-2n_hN_h}{n_h^2}\right)n_h+N_h-n_h\right)\\
+&=\sigma^2_h\left(\frac{N^2_h+n_h^2-2n_hN_h+N_hn_h-n_h^2}{n_h}\right)\\
+&=\sigma^2_h\left(\frac{N^2_h-n_hN_h}{n_h}\right)\\
+&=\frac{\sigma^2_h}{n_h}N_h^2\left(1-\frac{n_h}{N_h}\right)\\
+&=N_h^2\frac{\sigma^2_h}{n_h}(1-f)
+\end{align*}}
+\end{frame}
+
+%20
+\begin{frame}[allowframebreaks*]
+\frametitle{Error Cuadratico Medio}
+{\footnotesize
+\begin{equation*}
+ECM_\xi(T)=E_\xi[(\hat T-T)^2]=E_\xi\left[\left(\sum\limits_{h=1}^H(\hat T_h-T_h)\right)^2\right]
+\end{equation*}
+Se puede observar que se tiene:
+\begin{align*}
+E_\xi\left[\left(\sum\limits_{h=1}^H(\hat T_h-T_h)\right)^2\right]&=E_\xi\left[\sum\limits_{h=1}^H(\hat T_h-T_h)^2+\sum\limits_{h=1}^H\sum_{h \prime \neq h}(\hat T_h-T_h)(\hat T_{h \prime}-T_{h \prime})\right]\\
+&\stackrel{\text{ind}}{=}\sum\limits_{h=1}^H E_\xi\left[(\hat T_h-T_h)^2\right]+\sum\limits_{h=1}^H\sum_{h \prime \neq h}E_\xi\left[(\hat T_h-T_h)\right]E_\xi\left[(\hat T_{h \prime}-T_{h \prime})\right]\\
+&=\sum\limits_{h=1}^H E_\xi\left[(\hat T_h-T_h)^2\right]\\
+&=\sum\limits_{h=1}^H N_h^2\frac{\sigma_h^2}{n_h}(1-f)
+\end{align*}}
+\end{frame}
+
+%21
+\section{Estimador de Razon}
+ \tableofcontents[currentsection]
+
+%22
+\begin{frame}[allowframebreaks*]
+\frametitle{Modelo para el Estimador de Razon}
+\footnotesize{
+Un modelo para el estimador de razon es:
+$$\xi: y_k=\beta x_k+U_k \hspace{1.5cm}k=1,\dots,N$$
+donde se tiene que:
+\begin{align*}
+&x_1,\ldots,x_N>0 \text{ y son conocidos.}\\
+&y_1,\ldots,y_N \text{ son independientes.}
+\end{align*}
+Se tiene:
+\begin{align*}
+E_\xi[U_k]&=0\\
+V_{\xi}[U_k]&=\sigma^2x_k\\
+\end{align*}}
+\end{frame}
+
+%23
+\begin{frame}[allowframebreaks*]
+\frametitle{Minimos Cuadrados Ponderados}
+{\footnotesize
+\begin{align*}
+E(Y_k)&=E(\beta x_k+U_k)=E(\beta x_k)+E(U_k)=\beta x_k\\
+&\Rightarrow \hat Y_k=\hat\beta x_k\\
+\end{align*}
+Por minimos cuadrados ponderados se tiene:
+\begin{align*}
+\sum\limits_{k \in S}\left(\frac{y_k}{\sqrt{\sigma^2x_k}}-\frac{E(y_k)}{\sqrt{\sigma^2x_k}}\right)^2&=\sum\limits_{k \in S}\left(\frac{y_k}{\sqrt{\sigma^2x_k}} -\frac{\beta x_k}{\sqrt{\sigma^2x_k}}\right)^2\\
+\frac{\partial SCEP}{\partial \beta}&=2\sum\limits_{k \in S}\left(\frac{y_k}{\sqrt{\sigma^2x_k}}-\frac{\hat\beta x_k}{\sqrt{\sigma^2x_k}}\right)\frac{x_k}{\sqrt{\sigma^2x_k}}=0\\
+&\Rightarrow \sum\limits_{k \in S}(y_k-\hat\beta x_k)\frac{x_k}{\sigma^2x_k}=0\\
+&\Rightarrow \sum\limits_{k \in S} y_k=\sum\limits_{k \in S}\hat\beta x_k\\
+&\Rightarrow \hat\beta=\frac{\sum\limits_{k \in S} y_k}{\sum\limits_{k \in S} x_k}=\frac{n}{n}\frac{\sum\limits_{k \in S} y_k}{\sum\limits_{k \in S} x_k}=\frac{\bar y}{\bar x}\\
+\end{align*}}
+\end{frame}
+
+%24
+\begin{frame}[allowframebreaks*]
+\frametitle{Insesgamiento}
+{\footnotesize
+Entonces $\hat T_y$ es:
+\begin{align*}
+\hat T_y &=\sum\limits_{k\in S}Y_k+\sum\limits_{k\in S^c}\hat Y_k\\
+&=\sum\limits_{k\in S}Y_i+\hat\beta\sum\limits_{k\in S^c}x_k\\
+&=\frac{\bar y}{\bar x}t_x
+\end{align*}
+Se va a observar si el estimador es insesgado:
+\begin{align*}
+E_{\xi}[\hat T_y-T]&=E_{\xi}\left[\sum\limits_{k\in S}Y_k+\hat\beta\sum\limits_{k\in S^c}x_k-\sum\limits_{k\in S}Y_k-\sum\limits_{k\in S^c}Y_k\right]\\
+&=E_{\xi}\left[\hat\beta\sum\limits_{k\in S^c}x_k-\sum\limits_{k\in S^c}Y_k\right]\\
+&=E_{\xi}\left[\hat\beta\sum\limits_{k\in S^c}x_k\right]-E_{\xi}\left[\sum\limits_{k\in S^c}Y_k\right]\\
+&\stackrel{\text{ind}}{=}\beta\sum\limits_{k\in S^c}x_k-\beta\sum\limits_{k\in S^c}x_k\\
+&=0
+\end{align*}
+}
+\end{frame}
+
+%25
+\begin{frame}[allowframebreaks*]
+\frametitle{Error Cuadratico Medio}
+\begin{align*}
+ECM_{\xi}[\hat T]&=V_{\xi}\left[\sum\limits_{k\in S}Y_k+\hat\beta\sum\limits_{k\in S^c}x_k-\sum\limits_{k\in S}Y_k-\sum\limits_{k\in S^c}Y_k\right]\\
+&=V_{\xi}\left[\hat\beta\sum\limits_{k\in S^c}x_k-\sum\limits_{k\in S^c}Y_k\right]\\
+\end{align*}
+Al observarse $\hat \beta$ y $\sum\limits_{k\in S^c}Y_k$ se puede decir que son independientes dado los supuestos del modelo ya que este no depende de la muestra, por esto se puede considerar s fijo (Lohr, 2000):
+\begin{equation}
+=V_{\xi}\left[\hat\beta\sum\limits_{k\in S^c}x_k\right]+V_{\xi}\left[\sum\limits_{k\in S^c}Y_k\right]
+\end{equation}
+\end{frame}
+
+\begin{frame}[allowframebreaks*]
+\frametitle{Error Cuadratico Medio}
+Observando cada uno de los terminos por separado se tiene:
+\begin{align*}
+V_{\xi}\left[\sum\limits_{k\in S^c}Y_k\right]&=V_{\xi}\left[\sum\limits_{k\in S^c}(\beta x_k+U_k)\right]\\
+&\stackrel{ \text{ind}}{=}V_{\xi}\left[\sum\limits_{k\in S^c}\beta x_k\right]+V_{\xi}\left[\sum\limits_{k\in S^c}U_k\right]\\
+&\stackrel{ \text{ind}}{=}\sum\limits_{k\in S^c}V_{\xi}\left[\beta x_k\right]+\sum\limits_{k\in S^c}V_{\xi}\left[U_k\right]\\
+&=0+\sum\limits_{k\in S^c}\sigma^2x_k\\
+&=\sigma^2\sum\limits_{k\in S^c}x_k
+\end{align*}
+\end{frame}
+
+\begin{frame}[allowframebreaks*]
+\frametitle{Error Cuadratico Medio}
+Ahora
+\begin{align*}
+V_{\xi}\left[\hat\beta\sum\limits_{k\in S^c}x_k\right]&=\left(\sum\limits_{k\in S^c}x_k\right)^2V_{\xi}\left[\hat\beta\right]=\left(\sum\limits_{k\in S^c}x_k\right)^2V_{\xi}\left[\frac{\bar Y}{\bar X}\right]\\
+&=\left(\sum\limits_{k\in S^c}x_k\right)^2V_{\xi}\left[\frac{\sum\limits_{k\in S}Y_k}{\sum\limits_{i\in S}x_k}\right]\\
+&=\left(\sum\limits_{k\in S^c}x_k\right)^2\frac{1}{\left(\sum\limits_{k\in S}x_k\right)^2}V_{\xi}\left[\sum\limits_{k\in S}Y_k\right]\\
+&\stackrel{\text{ind}}{=}\left(\sum\limits_{k\in S^c}x_k\right)^2\frac{1}{\sum\limits_{k\in S}x_k}\sigma^2
+\end{align*}
+\end{frame}
+
+\begin{frame}[allowframebreaks*]
+\frametitle{Error Cuadratico Medio}
+Sumando ambos terminos
+\begin{align*}
+&=\left(\sum\limits_{k\in S^c}x_k\right)^2\frac{1}{\sum\limits_{k\in S}x_k}\sigma^2+\sigma^2\sum\limits_{k\in S^c}x_k\\
+&=\frac{\sigma^2\sum\limits_{k\in S^c}x_k}{\sum\limits_{k\in S}x_k}\left(\sum\limits_{k\in S^c}x_k+\sum\limits_{k\in S}x_k\right)\\
+&=\frac{\sigma^2}{\sum\limits_{k\in S}x_k}\sum\limits_{k\in S^c}x_k t_x=\frac{\sigma^2\left(t_x-\sum\limits_{k\in S}x_k\right)}{\sum\limits_{k\in S}x_k} t_x\\
+&=\sigma^2t_x\left(\frac{t_x}{\sum\limits_{k\in S}x_k}-1\right)=\frac{\sigma^2t_x^2}{\sum\limits_{k\in S}x_k}\left(1-\frac{\sum\limits_{k\in S}x_k}{t_x}\right)
+\end{align*}
+\end{frame}
+
+\begin{frame}[allowframebreaks*]
+\frametitle{Error Cuadratico Medio}
+Se puede observar que cuando el tama\~no de la muestra es peque\~no en comparacion del tama\~no de la poblacion entonces:
+$$V_{\xi}\left[\hat T_y-T\right]\approx\frac{\sigma^2t_x^2}{\sum\limits_{k\in S}x_k}$$
+Ademas:
+$$\left(1-\frac{\sum\limits_{k\in S}x_k}{t_x}\right)$$
+Sirve como una correccion para poblaciones finitas
+\end{frame}
+
+\end{document}
