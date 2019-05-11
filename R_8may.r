@@ -34,7 +34,7 @@ densityplot(~mpg,
 densityplot(~mpg|cyl.f,
    main="Density Plot by Number of Cylinders",
    xlab="Miles per Gallon")
-#Estimación no paramétrica de funciones de densidad (Método Kernel)
+#EstimaciÃ³n no paramÃ©trica de funciones de densidad (MÃ©todo Kernel)
 # kernel density plots by factor level (alternate layout)
 densityplot(~mpg|cyl.f,
    main="Density Plot by Numer of Cylinders",
@@ -143,7 +143,7 @@ pbinom(4,10,1/2)
 qbinom(0.38,size=10,prob=1/2)
 #[1] 5
 fx=dbinom(0:10,size=10,prob=1/2)
-plot(0:10,fx,type="h",main="Distribución Binomial",xlab="x",ylab="f(x)")
+plot(0:10,fx,type="h",main="DistribuciÃ³n Binomial",xlab="x",ylab="f(x)")
 points(0:10,fx,pch=16,cex=2)
 
 (a0<- (choose(4,0)*(0.1)^0*((0.9)^4)))
