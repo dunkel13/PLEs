@@ -1,0 +1,210 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{rotating} %Rotar graficas
+\usepackage{graphicx}  %Graficos
+\usepackage{wrapfig} %Figura al lado del texto
+\usepackage{longtable}
+
+\title{Latex-Unidad-Uno}
+\author{svergarac }
+\date{April 2019}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+\subsection{Matrices y otras expresiones matematicas}
+
+
+La matriz $3 \times 3$
+
+\[ X = \left[\begin{array}{ccc}
+1 & 2 & 3 \\
+4 & 5 & 6 \\
+7 & 8 & 9 \end{array} \right] \]
+
+
+Para representar el determinante de una matriz,  se puede usar la secuencia:
+\[ det(X) = \left|\begin{array}{ccc}
+6
+
+1 & 2 & 3 \\
+4 & 5 & 6 \\
+7 & 8 & 9 \end{array} \right| \].
+
+Un ejemplo de una matriz n-dimensional.Usaremos los comandos ddots
+$$\ddots$, cdots $$\cdots$ e vdots$$\vdots$
+
+\[ Y = \left[\begin{array}{cccc}
+1 & 2 & \cdots & 7 \\
+4 & 5 & \cdots & 6 \\
+\vdots & \vdots & \ddots & \vdots \\
+7 & 8 & \cdots & 4 \end{array} \right] \]
+
+Para hacer una multiplicación de matrices,
+\[ \left[\begin{array}{ccc}
+21 & 12 & 6 \\
+9 & 6 & 3 \\
+6 & 6 & 3 \end{array} \right]=
+\left[\begin{array}{cc}
+1 & 5 \\
+1 & 2 \\
+2 & 1 \end{array} \right]
+\left[\begin{array}{ccc}
+1 & 2 & 1 \\
+4 & 2 & 1\end{array} \right] \]
+
+En el ambiente matricial puede ser usado para formulas, así,
+\[|x| = \left\{ \begin{array}{ll}
+1 & \mbox{ se } x \geq 0; \\
+-1 & \mbox{ se } x < 0. \end{array} \right. \].
+
+En el ambiente array, tambiem se pueden escribir combinatorias, como, \[ P(Y = y) = \left( \begin{array}{c}
+n \\
+y \end{array} \right)p^y (1-p)^{n-y} \]
+
+Una forma alternativa mas simple es usando el comando choose, asi, \choose
+
+\[ P(Y = y) = {n \choose y} p^y (1-p)^{n-y} \]
+
+
+\subsection{Tablas}
+\begin{tabular}{lrcr}
+Izquierda & Derecha & Centrado & Derecha \\
+Uno & Dos & Tres & Cuatro \\
+1 & 2 & 3 & 4 \\
+i & ii & iii & iv
+\end{tabular}
+
+\vspace{1cm}
+\begin{tabular}{|l|r|c|r|}
+\hline
+Izquierda & Derecha & Centrado & Derecha \\
+Uno & Dos & Tres & Cuatro \\ \hline
+1 & 2 & 3 & 4 \\ \hline
+i & ii & iii & iv \\ \hline
+\end{tabular}
+
+\vspace{1cm}
+
+\def\tablename{Tabla}%
+\begin{table}[!htb]
+\caption{ Nuevos testes } \vspace*{0.2cm}
+\centering
+\begin{tabular}{l|r|c|r} \hline
+Izquierda & Derecha & Centrado & Derecha \\ \hline \hline
+Uno & Dos & Tres & Quatro \\
+1 & 2 & 3 & 4 \\
+i & ii & iii & iv \\
+Uno & Dos & Tres & Cuatro \\
+1 & 2 & 3 & 4 \\
+i & ii & iii & iv \\
+Un & Dos & Trs & Cuatro \\
+1 & 2 & 3 & 4 \\
+i & ii & iii & iv \\ \hline
+\end{tabular}
+\label{Tabe}
+\end{table}
+
+En la tabla \ref{Tabe}, se visualizan la alineación a la izquierda, derecha y centrado.
+
+\def\tablename{Tabela}%
+\begin{table}[ht!]
+\centering
+\caption{Selección de posgrados} \vspace*{0.3cm}
+\begin{tabular}{c|l|l|c|c} \hline
+Nivel & Año & Curso & Inscritos & Selecionados \\ \hline
+Maestria & 2000 & Estadística & 15 & 10 \\ \cline{3-5}
+& & Genética & 20 & 10 \\ \cline{3-5}
+& & Economía & 25 & 15 \\ \cline{2-5}
+& 2001 & Estadística & 18 & 10 \\ \cline{3-5}
+& & Genética & 15 & 10 \\ \cline{3-5}
+& & Economía & 19 & 15 \\ \hline
+Doctorado & 2000 & Estadística & 10 & 5 \\ \cline{3-5}
+& & Genética & 10 & 4 \\ \cline{3-5}
+& & Economía & 15 & 8 \\ \cline{2-5}
+& 2001 & Estadística & 8 & 4 \\ \cline{3-5}
+& & Genética & 12 & 10 \\ \cline{3-5}
+& & Economía & 15 & 10 \\ \hline
+\end{tabular}
+\end{table}
+
+\def\tablename{Tabela}%
+\begin{table}[!htb]
+\centering
+\caption{Notas de los alumnos del curso de \LaTeX } \vspace*{0.3cm}
+\large
+\begin{tabular}{l|c|rrrr} \hline
+Nombre & No. TIUN  & \multicolumn{4}{c}{Calificaciones} \\ \hline
+Martha & 1111112 & 5.0 & 4.8.0 & 3.8 & 4.1 \\
+José & 2123333   & 3.4 & 4.5 & 3.1 & 5.0 \\
+Andrés & 22235768 & 3.5 & 3.1 & \multicolumn{2}{c}{F} \\
+María & 3678767 & 4.9 & 3.2& 4.1 & 3.9 \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{center}
+\def\tablename{Tabla}%
+\begin{table}[!htb]
+\centering
+\caption{Notas de los alumnos del curso de \LaTeX } \vspace*{0.3cm}
+\begin{sideways}
+\begin{tabular}{l|c|rrrr} \hline
+Nombre & No. TIUN  & \multicolumn{4}{c}{Calificaciones} \\ \hline
+Martha & 1111112 & 5.0 & 4.8.0 & 3.8 & 4.1 \\
+José & 2123333   & 3.4 & 4.5 & 3.1 & 5.0 \\
+Andrés & 22235768 & 3.5 & 3.1 & \multicolumn{2}{c}{F} \\
+María & 3678767 & 4.9 & 3.2& 4.1 & 3.9 \\ \hline
+\end{tabular}
+\end{sideways}
+\end{table}
+\end{center}
+
+\subsection{Figuras}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.1\textwidth]{teste.jpg}
+\includegraphics[width=0.2\textwidth]{teste.jpg}
+\includegraphics[width=0.4\textwidth]{teste.jpg}
+\caption{Escalas=0.1, 0.2 e 0.4, respectivamente}
+\end{figure}
+
+\begin{figure}[!htb]
+\begin{minipage}[b]{0.40\linewidth}
+\includegraphics[width=\linewidth]{teste.jpg}
+\caption{Figura de la izquierda}
+\label{fig1}
+\end{minipage} \hfill
+\begin{minipage}[b]{0.40\linewidth}
+\includegraphics[width=\linewidth]{teste.jpg}
+\caption{Figura a la derecha}
+\label{fig2}
+\end{minipage}
+\end{figure}
+
+
+\begin{figure}[!htb]
+\begin{minipage}[b]{0.40\linewidth}
+\includegraphics[width=\textwidth]{caballo.jpg}
+\caption{Figura sin reflejo}
+\label{fig4}
+\end{minipage} \hfill
+\begin{minipage}[b]{0.40\linewidth}
+\reflectbox{\includegraphics[width=\textwidth]{caballo.jpg}}
+\caption{Figura con reflejo}
+\label{fig5}
+\end{minipage}
+\end{figure}
+
+\begin{figure}[!htb]
+\includegraphics[scale=0.3,angle=45]{caballo.jpg}
+\caption{Figura rotación 45 grados}
+\label{Aviao}
+\end{figure}
+
+
+
+\end{document}
