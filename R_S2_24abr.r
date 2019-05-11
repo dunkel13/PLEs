@@ -301,7 +301,7 @@ colnames
 ##########
 ##########
 #Genere una matriz de 6000 datos en 6 columnas,
-#usando la distribución normal, media =0, y sd=1,
+#usando la distribuciÃ³n normal, media =0, y sd=1,
 args(rnorm)
 (matrix(rnorm(6000),ncol=6))
 norm<-as.data.frame(matrix(rnorm(6000),nco=6))
@@ -431,7 +431,7 @@ plot(x111,y111)
 
 plot(x111,y111,
 main="50 puntos generados ? de 0 a 2",
-sub="Números aleatorios generados",
+sub="NÃºmeros aleatorios generados",
  xlab="X", ylab="Y")
 text(0.6,0.6,"text at(0.6,0.6)")
 abline(h=0.6, v=0.6, col="red")
@@ -664,8 +664,8 @@ rug(waiting) #Mostrar los valores
 
 ?plot
 data(pressure)
-plot(pressure,xlab="Temperatura",ylab="Presión",col="red",type="l")
-text(150,200, "Presión (mm Hg) \nvs\nTemperatura (°Celsius)")
+plot(pressure,xlab="Temperatura",ylab="PresiÃ³n",col="red",type="l")
+text(150,200, "PresiÃ³n (mm Hg) \nvs\nTemperatura (Â°Celsius)")
 
 
 
@@ -676,21 +676,21 @@ sample(1:6, 1)
 #  Para simular la tirada de 4 dados, o de un mismo dado 4 veces, podemos
 #utilizar
 sample(1:6, 4, rep = T)
-#Si queremos simular la distribución de la suma de los números que salen
+#Si queremos simular la distribuciÃ³n de la suma de los nÃºmeros que salen
 #al tirar 4 dados
 #############
-#donde la función sapply aplica a un vector de tama~no
-#10000 una función sin
+#donde la funciÃ³n sapply aplica a un vector de tama~no
+#10000 una funciÃ³n sin
 #nombre, generando a su vez un vector de tama~no 10000.
-#La función obtiene
-#muestras con repetición de tamaño 4 y, a
-#continuación, suma los números
+#La funciÃ³n obtiene
+#muestras con repeticiÃ³n de tamaÃ±o 4 y, a
+#continuaciÃ³n, suma los nÃºmeros
 #de la muestra. Este proceso se repite 10000 veces.
- #Lo mismo se podría haber
+ #Lo mismo se podrÃ­a haber
 #conseguido con un ciclo for, pero el procedimiento
-#utilizado es más rápido.
+#utilizado es mÃ¡s rÃ¡pido.
 #Para garantizar que los resultados son los mismos
-#que los de esta práctica,
+#que los de esta prÃ¡ctica,
 #nos servimos de set.seed(111)
 set.seed(111)
 t<-sapply(1:10000, function(x) {
@@ -707,8 +707,8 @@ x <- runif(4, 0, 6)
 x
       ?fdth
 
-#genera 4 números aleatorios uniformemente distribuidos entre 0 y 6.
-#La función
+#genera 4 nÃºmeros aleatorios uniformemente distribuidos entre 0 y 6.
+#La funciÃ³n
  ceiling(x)
 
 #transforma los valores anteriores en el menor entero no inferior al numero
@@ -717,7 +717,7 @@ x
 #O tambien
 ceiling(runif(4, 0, 6))
 
- #donde el parámetro 1 indica que trabajamos por filas y podríamos añadir
+ #donde el parÃ¡metro 1 indica que trabajamos por filas y podrÃ­amos aÃ±adir
 #una nueva columna a la matriz x con estas varianzas, mediante cbind
 ?apply
 x <- cbind(x1 = 3, x2 = c(4:1, 2:5))
@@ -741,9 +741,9 @@ x
  xx
  colnames(xx) <- c(colnames(x), "varianzas")
  xx
-  #Análogamente, podemos trabajar por columnas con
+  #AnÃ¡logamente, podemos trabajar por columnas con
 apply(x, 2, var)
-#donde el parámetro 2 indica que trabajamos por columnas y podríamos añadir
+#donde el parÃ¡metro 2 indica que trabajamos por columnas y podrÃ­amos aÃ±adir
 #esta a la a la matriz
 xxx <- rbind(x, apply(x, 2, var))
  xxx
@@ -858,8 +858,8 @@ f1
 f2<-cbind(c(56,2),c(8,16))
 f2
 par(mfrow=c(2,1))
-barplot(f1,xlab="Pariente", main="El niño uso el cinturon de seguridad" )
-barplot(f1,xlab="Pariente", main="El niño uso el cinturon de seguridad", beside=TRUE )
+barplot(f1,xlab="Pariente", main="El niÃ±o uso el cinturon de seguridad" )
+barplot(f1,xlab="Pariente", main="El niÃ±o uso el cinturon de seguridad", beside=TRUE )
 
 margin.table(f1,1)  #Suma filas
 margin.table(f1,2)  #Suma Columnas
