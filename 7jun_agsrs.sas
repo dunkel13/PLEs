@@ -17,7 +17,7 @@ data agsrs;
  drop acres82 farms92 farms82 largef92 largef87 largef82;
  incremento=acres92-acres87;
  if acres92>297897 then tamano="grande  ";
- else tamano="pequeño";
+ else tamano="pequeÃ±o";
  run;
  proc print data=agsrs3;
  run;
