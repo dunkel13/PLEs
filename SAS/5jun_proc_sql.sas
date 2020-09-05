@@ -1,9 +1,9 @@
 * 5 de junio;
 title 'Listado de los clientes';
 select * from cliente;
-title 'Cambiar la presentaci髇 de los nombres de los campos';
+title 'Cambiar la presentaci贸n de los nombres de los campos';
 select ocup as ocupado, ingr as ingreso from cliente;
-title'Uso de la instrucci髇 case para manejo condicional';
+title'Uso de la instrucci贸n case para manejo condicional';
 select case sexo 
 		when 1 then 'Sr.'
 		when 2 then 'Sra.'
@@ -11,7 +11,7 @@ select case sexo
 	end,
 	nombre||' '|| apellido, tel_res
 from cliente;
-*title'Uso de la instrucci髇 case para manejo condicional';
+*title'Uso de la instrucci贸n case para manejo condicional';
 *select case estr 
 		when 1 then estr='Uno'
 		when 2 then estr='Dos'
@@ -42,17 +42,17 @@ select case
 	nombre||' '|| apellido, tel_res, ingr
 from cliente;
 
-title'Creaci髇 de una tabla a partir de otra';
+title'Creaci贸n de una tabla a partir de otra';
 create table cliente3 as  select * from cliente;
 select * from cliente3;
 
 drop table cliente2;
-title'Creaci髇 de una tabla con un nuevo campo de edad con un valor constante =30';
+title'Creaci贸n de una tabla con un nuevo campo de edad con un valor constante =30';
 create table cliente2 as 
 select ident, sexo, nombre, apellido, trim(dir1)||' '|| trim(dir2)||'#'||trim(dir3)||'-'||trim(dir4)||' '|| trim(dir5) as dir_res, tel_res, ocup, educ, ingr, 30 as edad from cliente;
 select * from cliente2;
 
-title'Creaci髇 de una tabla';
+title'Creaci贸n de una tabla';
 create table todos(
 	ident numeric(5,
 	sexo numeric(1),
@@ -65,15 +65,15 @@ create table todos(
 );  
 select * from todos;
 
-title'Eliminaci髇 de la tabla cliente3';
+title'Eliminaci贸n de la tabla cliente3';
 drop table cliente3;
 select * from cliente3;
-*insercci髇 de datos a cliente2;
+*insercci贸n de datos a cliente2;
 title'Nuevos datos insertados en cliente2';
 insert into cliente2 values(21331,1 'Pedro','Pelaez','dg 26 #45-26','2313131',3,4,5000,34);
 select * from cliente2;
 
-title'Pedro2 solo tiene identificaci髇 y nombre. Los demas datos faltan';
+title'Pedro2 solo tiene identificaci贸n y nombre. Los demas datos faltan';
 insert into cliente2 (ident, nombre) values(21332,'Pedro2');
 select * from cliente2;
 
@@ -91,7 +91,7 @@ select * from cliente2;
 
 delete * from cliente2;
 
-title'Reinserta en Cliente2 los datos de cliente, modificando la direcci髇';
+title'Reinserta en Cliente2 los datos de cliente, modificando la direcci贸n';
 insert into cliente2
 select ident, sexo, nombre, apellido, trim(dir1)||' '|| trim(dir2)||'#'||trim(dir3)||'-'||trim(dir4)||' '|| trim(dir5) as dir_res, tel_res, ocup, educ, ingr, 30 as edad from cliente;
 
